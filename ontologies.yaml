@@ -1,0 +1,145 @@
+version: "0.1"
+categories:
+  sponsor_themes:
+    threshold: 0.35
+    tags:
+      - name: "Public Health"
+        keywords:
+          - { pattern: "public health", weight: 2.0 }
+          - { pattern: "health", weight: 1.0 }
+          - { pattern: "epidemiolog", weight: 1.5 }
+      - name: "Mental Health"
+        keywords:
+          - { pattern: "mental health", weight: 2.0 }
+          - { pattern: "suicide", weight: 2.0 }
+          - { pattern: "crisis", weight: 1.5 }
+
+  research_domains:
+    threshold: 0.35
+    tags:
+      - name: "Cyberinfrastructure"
+        keywords:
+          - { pattern: "cyberinfrastructure", weight: 2.5 }
+          - { pattern: "infrastructure", weight: 1.0 }
+      - name: "Computational"
+        keywords:
+          - { pattern: "computational", weight: 2.0 }
+          - { pattern: "modeling", weight: 1.2 }
+          - { pattern: "simulation", weight: 1.2 }
+
+  methods:
+    threshold: 0.35
+    tags:
+      - name: "NLP"
+        keywords:
+          - { pattern: "natural language", weight: 2.0 }
+          - { pattern: "nlp", weight: 2.0 }
+          - { pattern: "text mining", weight: 1.5 }
+      - name: "Geospatial"
+        keywords:
+          - { pattern: "geospatial", weight: 2.0 }
+          - { pattern: "mapping", weight: 1.2 }
+          - { pattern: "spatial", weight: 1.2 }
+
+  populations:
+    threshold: 0.35
+    tags:
+      - name: "Youth"
+        keywords:
+          - { pattern: "adolescen", weight: 1.5 }
+          - { pattern: "youth", weight: 2.0 }
+          - { pattern: "student", weight: 1.0 }
+      - name: "Veterans"
+        keywords:
+          - { pattern: "veteran", weight: 2.0 }
+          - { pattern: "military", weight: 1.2 }
+
+  funding_mechanism:
+    threshold: 0.35
+    tags:
+      - name: "Research Grant"
+        keywords:
+          - { pattern: "research grant", weight: 2.0 }
+          - { pattern: "grant", weight: 1.0 }
+      - name: "Cooperative Agreement"
+        keywords:
+          - { pattern: "cooperative agreement", weight: 2.5 }
+          - { pattern: "cooperative-agreement", weight: 2.5 }
+      - name: "Contract"
+        keywords:
+          - { pattern: "contract", weight: 2.0 }
+
+  data_types:
+    threshold: 0.35
+    tags:
+      - name: "Administrative Data"
+        keywords:
+          - { pattern: "administrative data", weight: 2.0 }
+          - { pattern: "case records", weight: 1.5 }
+          - { pattern: "criminal history", weight: 1.5 }
+      - name: "Survey / Interview Data"
+        keywords:
+          - { pattern: "survey", weight: 1.8 }
+          - { pattern: "questionnaire", weight: 1.5 }
+          - { pattern: "interview", weight: 1.5 }
+      - name: "Text / Document Data"
+        keywords:
+          - { pattern: "textual", weight: 1.5 }
+          - { pattern: "documents", weight: 1.5 }
+          - { pattern: "records", weight: 1.0 }
+
+  settings:
+    threshold: 0.35
+    tags:
+      - name: "Criminal Justice System"
+        keywords:
+          - { pattern: "criminal justice", weight: 2.0 }
+          - { pattern: "law enforcement", weight: 2.0 }
+          - { pattern: "police", weight: 1.5 }
+          - { pattern: "correctional", weight: 1.5 }
+          - { pattern: "probation", weight: 1.2 }
+          - { pattern: "parole", weight: 1.2 }
+          - { pattern: "court", weight: 1.2 }
+      - name: "Education Settings"
+        keywords:
+          - { pattern: "school", weight: 1.8 }
+          - { pattern: "classroom", weight: 1.5 }
+          - { pattern: "university", weight: 1.5 }
+          - { pattern: "college", weight: 1.5 }
+
+  tech_focus:
+    threshold: 0.35
+    tags:
+      - name: "Cybersecurity / Privacy"
+        keywords:
+          - { pattern: "cybersecurity", weight: 2.0 }
+          - { pattern: "information security", weight: 1.8 }
+          - { pattern: "privacy", weight: 1.5 }
+      - name: "AI / Machine Learning"
+        keywords:
+          - { pattern: "artificial intelligence", weight: 2.0 }
+          - { pattern: "machine learning", weight: 2.0 }
+          - { pattern: "deep learning", weight: 1.5 }
+      - name: "Standardization / Interoperability"
+        keywords:
+          - { pattern: "standardization", weight: 2.0 }
+          - { pattern: "standards body", weight: 1.8 }
+          - { pattern: "iso/iec", weight: 2.5 }
+          - { pattern: "interoperability", weight: 1.8 }
+
+  sponsor_org:
+    threshold: 0.35
+    tags:
+      - name: "NIJ / DOJ"
+        keywords:
+          - { pattern: "national institute of justice", weight: 2.5 }
+          - { pattern: "nij", weight: 2.0 }
+          - { pattern: "department of justice", weight: 2.0 }
+      - name: "NSF"
+        keywords:
+          - { pattern: "national science foundation", weight: 2.5 }
+          - { pattern: "nsf", weight: 2.0 }
+      - name: "NIH"
+        keywords:
+          - { pattern: "national institutes of health", weight: 2.5 }
+          - { pattern: "nih", weight: 2.0 }
