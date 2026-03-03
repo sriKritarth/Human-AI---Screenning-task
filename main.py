@@ -409,29 +409,24 @@ def write_csv(out_dir: str, foa: Dict[str, Any], filename: str = "foa.csv") -> s
 
 def detect_source(url: str) -> str:
     """
-    Lightweight source detection. Currently we only implement Grants.gov
-    but this makes it easy to add NSF later.
+    Lightweight source detection. This script currently supports Grants.gov
+    FOA detail URLs only.
     """
     u = url.lower()
     if "grants.gov" in u:
         return "grants.gov"
-    if "nsf.gov" in u or "beta.nsf.gov" in u:
-        return "nsf"
-    raise ValueError("Unsupported URL: expected Grants.gov or NSF FOA detail URL.")
+    raise ValueError("Unsupported URL: expected a Grants.gov FOA detail URL.")
 
 
 def run_pipeline(url: str, out_dir: str) -> None:
     ensure_out_dir(out_dir)
 
     source = detect_source(url)
+    if source != "grants.gov":
+        # This is defensive; detect_source already raises for non-Grants.gov URLs.
+        raise ValueError("Only Grants.gov FOA URLs are supported in this script.")
 
-    if source == "grants.gov":
-        extractor = GrantsGovExtractor(url)
-    else:
-        # Skeleton for future NSF support; kept explicit so failures are clear.
-        raise ValueError(
-            f"NSF URL detected but NSF extractor is not yet implemented: {url}"
-        )
+    extractor = GrantsGovExtractor(url)
 
     foa = extractor.extract().to_dict()
 

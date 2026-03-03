@@ -80,7 +80,7 @@ Each such column contains a `;`-separated list of tag names.
   - `description`, `eligibility` (from `applicantTypes`)
   - `source`, `source_url`, `retrieved_at`
 
-NSF URLs are detected in `detect_source`, but currently raise a clear error so that extension work is explicit rather than silently incorrect.
+Non-Grants.gov URLs will raise a clear error; NSF support is intentionally out of scope for this script and can be implemented separately (e.g., in a dedicated notebook).
 
 ---
 
