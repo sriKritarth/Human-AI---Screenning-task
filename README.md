@@ -151,5 +151,5 @@ To tweak or extend the tagging:
   - Adjust `weight` to emphasize especially diagnostic phrases.
 - Adjust per-category `threshold` if you want more or fewer tags returned.
 
-You can also experiment in the notebook `humanai_issr4_grantsgov.ipynb` and then copy the final ontology back into `main.py`.
+
 
