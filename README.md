@@ -158,33 +158,73 @@ In the CSV, these become columns such as:
 
 ---
 
-## NSF notebook: HTML extraction + deterministic + semantic tagging
+## NSF notebook: maintainer-facing exploration of a single NSF URL
 
-The notebook `humanAI_issr4_nsf.ipynb` explores a different data source (**NSF Dear Colleague Letters on `nsf.gov`**) and a hybrid tagging approach:
+The notebook `humanAI_issr4_nsf.ipynb` is intentionally structured as an **evaluation notebook**, not just a dump of experiments. It focuses on a **single NSF opportunity URL** and shows maintainers how the problem was approached step by step:
 
-- **Extraction (NSF)**:
-  - Defines an `NSFFOARecord` dataclass similar to `FOARecord` but tailored for NSF FOAs.
-  - Uses `requests` + `BeautifulSoup` to fetch and parse HTML from specific NSF URLs (e.g. Dear Colleague Letters).
-  - Extracts title, a short description, and, where available, `ELIGIBILITY` / `DEADLINES` text blocks directly from the page.
-- **Deterministic tagging for NSF**:
-  - Wraps `RuleBasedTagger` in a helper `tag_nsf_foa(foa: NSFFOARecord)`.
-  - Concatenates key NSF fields (`title`, `description`, `eligibility`, `agency`) into a single text string.
-  - Calls the **same deterministic ontology** (from `ontologies.yaml`) used by the Grants.gov CLI, returning a record with a `tags` dict in the same shape as the CLI output.
-- **Semantic tag suggestions (sentence-transformers)**:
-  - Builds a list of label texts from the ontology (e.g. `"tech_focus :: AI / Machine Learning"`).
-  - Encodes these labels with a `SentenceTransformer` model (e.g. `all-MiniLM-L6-v2`) to create an embedding index.
-  - For each NSF FOA, encodes the FOA text and computes cosine similarity against the label embeddings.
-  - Produces a ranked list of **semantic suggestions** of the form `{category, name, semantic_score}`.
-- **Hybrid tagging**:
-  - A helper `augment_tags_with_semantic` takes:
-    - The deterministic tags (from `tag_nsf_foa`), and
-    - The top semantic suggestions.
-  - It fills in **missing categories** in the deterministic tags with the highest-scoring semantic suggestions, up to a small cap (e.g. 1–2 new categories per FOA).
-  - The result is a `hybrid_tags` structure that is still ontology-aligned but can cover gaps where the keyword rules are too strict.
+- how the NSF page is ingested,
+- how structured FOA fields are extracted,
+- how different tagging strategies behave on the same NSF text,
+- and why the deterministic approach remains the most task-aligned baseline.
 
-This notebook is **exploratory only** and is meant to help iterate on the ontology and understand how deterministic tags compare to embedding-based suggestions for NSF content.
+### What the NSF notebook now covers
 
-If you run the semantic cells, remember to install `sentence-transformers` and optionally configure `HF_TOKEN` for authenticated model downloads.
+| Approach | Core idea | Input used from NSF URL | Determinism | Explainability | Handles wording variation | Best use |
+|---|---|---|---|---|---|---|
+| **1A. Deterministic parser + rule-based ontology tags** | Parse page fields and assign tags from curated ontology rules | Title, description, eligibility, agency | High | High | Low to Medium | Best default baseline for the screening task |
+| **1B. Semantic label suggestions** | Compare FOA text against ontology label texts using sentence-transformer embeddings | Same structured FOA text | Medium | Medium | High | Good for recovering tags missed by strict rules |
+| **2. TF-IDF baseline** | Match FOA text against ontology labels using classical vector-space similarity | Flattened FOA text and ontology labels | Medium | Medium to High | Medium | Useful lightweight NLP baseline |
+| **3. Embedding-based tagging + hybridization** | Use semantic embeddings to rank label candidates, then augment deterministic tags cautiously | Same NSF FOA text plus ontology labels | Medium | Medium | High | Best exploratory approach for broader wording coverage |
+
+### Extraction (NSF)
+
+- Defines an `NSFFOARecord` dataclass similar to `FOARecord`, adapted for NSF opportunity pages.
+- Uses `requests` + `BeautifulSoup` to fetch and parse HTML from specific NSF URLs.
+- Extracts title, description, and, where available, sections such as eligibility or deadlines directly from the page.
+
+### Approach 1 — deterministic extraction with optional semantic augmentation
+
+This is the **most task-aligned approach** in the notebook.
+
+- `tag_nsf_foa(foa: NSFFOARecord)` wraps the same `RuleBasedTagger` used by the Grants.gov CLI.
+- Key fields (`title`, `description`, `eligibility`, `agency`) are concatenated into one text string.
+- The ontology in `ontologies.yaml` is applied exactly as in the CLI, so the output `tags` structure remains consistent across Grants.gov and NSF.
+
+An optional semantic extension is then added on top of this baseline:
+
+- ontology labels are embedded with `SentenceTransformer`,
+- the FOA text is embedded once,
+- cosine similarity is used to rank semantic label suggestions,
+- and `augment_tags_with_semantic` fills only selected **missing categories** rather than replacing the deterministic base.
+
+### Approach 2 — TF-IDF baseline
+
+This section adds a classical NLP baseline between pure keyword rules and semantic embeddings.
+
+- The ontology is flattened into label text.
+- TF-IDF vectorization is used to compare the NSF FOA text with ontology labels.
+- This gives a softer lexical match than exact rules while remaining lighter and more interpretable than full embedding search.
+
+### Approach 3 — embedding-based tagging and hybridization
+
+This section explores whether semantic embeddings improve tag recovery when the NSF page wording differs from ontology keywords.
+
+- Ontology labels are encoded using `sentence-transformers`.
+- The FOA text is compared against those label embeddings.
+- Top semantic candidates are reviewed as suggestions.
+- A cautious hybrid layer is used so the notebook can test better coverage **without discarding explainable deterministic tags**.
+
+### Maintainer note on LLM usage
+
+LLMs were used as a **support tool for understanding the problem, thinking through alternative solution paths, and improving the notebook/readme presentation**. They were **not used as the core tagging engine** for the final deterministic baseline.
+
+To keep the implementation reviewable and aligned with the task:
+
+- the Grants.gov CLI remains fully deterministic,
+- the NSF baseline tagging remains ontology-driven,
+- the exploratory semantic layer relies on `sentence-transformers` embeddings rather than direct LLM inference.
+
+This notebook is therefore best read as a **maintainer-facing exploration of multiple approaches**, with a clear preference for the deterministic baseline and controlled semantic augmentation where useful.
 
 ---
 
@@ -204,4 +244,6 @@ To experiment with **semantic tagging** for new FOA sources:
   - Build an ontology label list from `ontologies.yaml`.
   - Encode labels + FOA text with a `SentenceTransformer` model.
   - Compare deterministic vs semantic tags and optionally build hybrid tags for analysis.
+
+
 
