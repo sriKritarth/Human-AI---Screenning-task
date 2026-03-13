@@ -1,0 +1,26 @@
+{
+  "foa_id": "HQ003425NFOEASD03",
+  "title": "DoD Cyber Service Academy (DoD CSA)",
+  "agency": "Jonathan Bertsch\nGrantor",
+  "posting_date": "Jan 23, 2025 12:00:00 AM EST",
+  "close_date": "Jan 22, 2030 12:00:00 AM EST",
+  "award_ceiling": "20000000",
+  "award_floor": "50000",
+  "description": "<p><strong><em><u>See the \"Related Documents\" and \"Package\" tabs for the complete application package, including the full text of the Notice of Funding Opportunity.</u></em></strong></p><p><br></p><p>The Department of Defense (DoD) Cyber Service Academy (CSA) is authorized by Chapter 112 of title 10, United States Code, Section 2200. The purpose of the program is to support the recruitment of new cyber talent and the retention of current highly skilled professionals within the DoD cyber workforce. Additionally, this program serves to enhance the national pipeline for the development of cyber personnel by providing grants to institutions of higher education.</p><p><br></p><p>Regionally and nationally accredited U.S. institutions of higher education, designated under the National Centers of Academic Excellence in Cybersecurity (NCAE-C) and known as National Centers of Academic Excellence in Cyber Defense, Research, and/or Cyber Operations (hereinafter referred to as NCAE-Cs) are invited to submit proposals for developing and managing a full-time, institution-based, grant-funded scholarship program in cyber-related disciplines for Academic Year 2024- 2025. NCAE-Cs may propose collaboration with other accredited institutions, and are encouraged to include accredited post-secondary minority institutions. NCAE-Cs must be in good standing with the NCAE-C Program Office and not be delinquent on any required documentation by the NCAE-C Program Office.</p><p><br></p><p>Consistent with 10 U.S.C. 2200b, NCAE-C proposals to this solicitation may also request modest collateral support for purposes of institutional capacity building to include faculty development, laboratory improvements, and/or curriculum development, in cyber-related topics to providing a strong foundation for a DoD CSA.</p>",
+  "eligibility": "Others (see text field entitled \"Additional Information on Eligibility\" for clarification)",
+  "source": "grants.gov",
+  "source_url": "https://www.grants.gov/search-results-detail/358380",
+  "retrieved_at": "2026-02-27T12:42:31.912834+00:00",
+  "tags": {
+    "data_types": [
+      {
+        "name": "Text / Document Data"
+      }
+    ],
+    "tech_focus": [
+      {
+        "name": "Cybersecurity / Privacy"
+      }
+    ]
+  }
+}
